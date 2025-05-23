@@ -53,8 +53,11 @@ jobs:
 
  cypress-run:
    runs-on: ubuntu-latest
+   strategy:
+      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
+      matrix:
+        containers: [1, 2] # Uses 2 parallel instances
    if: ${{ always() }}
-   needs: deploy
    steps:
      - name: Check out repository code
        uses: actions/checkout@v3
@@ -63,7 +66,7 @@ jobs:
        run: echo "THEME_ID=${{ needs.deploy.outputs.shopify_theme_id }}"
 
      - name: Run cypress tests
-       uses: cypress-io/github-action@v4
+       uses: cypress-io/github-action@v6
        timeout-minutes: 10
        with:
          record: true
