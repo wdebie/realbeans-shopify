@@ -74,3 +74,4 @@ jobs:
        env:
          THEME_ID: ${{ needs.deploy.outputs.shopify_theme_id }}
          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
