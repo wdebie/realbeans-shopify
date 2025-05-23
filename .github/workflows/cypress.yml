@@ -67,7 +67,7 @@ jobs:
        run: echo "THEME_ID=${{ needs.deploy.outputs.shopify_theme_id }}"
 
      - name: Run cypress tests
-       uses: cypress-io/github-action@v6
+       uses: cypress-io/github-action@v4
        timeout-minutes: 10
        with:
          record: true
