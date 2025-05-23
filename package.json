@@ -1,0 +1,23 @@
+{
+  "name": "realbeans-shopify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wdebie/realbeans-shopify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wdebie/realbeans-shopify/issues"
+  },
+  "homepage": "https://github.com/wdebie/realbeans-shopify#readme",
+  "devDependencies": {
+    "cypress": "^14.4.0"
+  }
+}

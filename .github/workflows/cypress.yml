@@ -1,0 +1,73 @@
+name: Cypress E2E Testing (Deploy Preview)
+
+on: pull_request
+
+concurrency:
+ group: ${{ github.workflow }}-${{ github.ref }}
+ cancel-in-progress: false
+
+env:
+ SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_FLAG_STORE }}
+ SHOPIFY_URL: ${{ secrets.SHOPIFY_URL }}
+ SHOPIFY_CLI_TTY: 0
+ SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+ CYPRESS_PROJECT_ID: ${{ vars.CYPRESS_PROJECT_ID }}
+ THEME_PASSWORD: ${{ secrets.THEME_PASSWORD }}
+
+jobs:
+ deploy:
+   name: Deploy
+   runs-on: ubuntu-latest
+   outputs:
+     shopify_theme_id: ${{ steps.theme_info.outputs.shopify_theme_id }}
+   steps:
+     - name: Check out repository code
+       uses: actions/checkout@v3
+
+     - name: GitHub Refs
+       uses: rlespinasse/github-slug-action@v4
+
+     - uses: actions/setup-node@v3
+       with:
+         node-version: 18
+
+     - uses: ruby/setup-ruby@v1
+       with:
+         ruby-version: 3.1
+         bundler: latest
+
+     - name: Install Shopify CLI
+       run: npm install -g @shopify/cli @shopify/theme && echo "🎉 The job was automatically triggered by a ${{ github.event.action }} event."
+
+     - name: Push theme
+       if: github.event.action == 'synchronize' || github.event.action == 'opened' || github.event.action == 'reopened'
+       run: chmod +x ./.github/workflows/cypress/push_shopify_theme.sh && ./.github/workflows/cypress/push_shopify_theme.sh git-${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+       continue-on-error: true
+
+     - name: Shopify info
+       id: theme_info
+       if: ${{ always() }}
+       run: |
+         chmod +x ./.github/workflows/cypress/retrieve_shopify_theme_id.sh
+         echo "shopify_theme_id=$(./.github/workflows/cypress/retrieve_shopify_theme_id.sh git-${{ env.GITHUB_HEAD_REF_SLUG_URL }})" >> $GITHUB_OUTPUT
+
+ cypress-run:
+   runs-on: ubuntu-latest
+   if: ${{ always() }}
+   needs: deploy
+   steps:
+     - name: Check out repository code
+       uses: actions/checkout@v3
+
+     - name: Detect Shopify theme id
+       run: echo "THEME_ID=${{ needs.deploy.outputs.shopify_theme_id }}"
+
+     - name: Run cypress tests
+       uses: cypress-io/github-action@v4
+       timeout-minutes: 10
+       with:
+         record: true
+         parallel: true
+       env:
+         THEME_ID: ${{ needs.deploy.outputs.shopify_theme_id }}
+         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
