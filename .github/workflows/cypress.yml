@@ -1,6 +1,6 @@
 name: Cypress E2E Testing (Deploy Preview)
 
-on: pull_request
+on: push
 
 concurrency:
  group: ${{ github.workflow }}-${{ github.ref }}
@@ -58,6 +58,7 @@ jobs:
       matrix:
         containers: [1, 2] # Uses 2 parallel instances
    if: ${{ always() }}
+   needs: deploy
    steps:
      - name: Check out repository code
        uses: actions/checkout@v3
