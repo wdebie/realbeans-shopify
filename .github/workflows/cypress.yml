@@ -61,13 +61,13 @@ jobs:
    needs: deploy
    steps:
      - name: Check out repository code
-       uses: actions/checkout@v3
+       uses: actions/checkout@v4
 
      - name: Detect Shopify theme id
        run: echo "THEME_ID=${{ needs.deploy.outputs.shopify_theme_id }}"
 
      - name: Run cypress tests
-       uses: cypress-io/github-action@v4
+       uses: cypress-io/github-action@v6
        timeout-minutes: 10
        with:
          record: true
