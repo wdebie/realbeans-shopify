@@ -7,7 +7,7 @@ describe('About Page Tests', () => {
     cy.get('body').then(($body) => {
       if ($body.find('form[action="/password"]').length > 0) {
         cy.get('button[type="submit"]').click();
-        cy.get('form[action="/password"] input[type="password"]').type(`${Cypress.env('THEME_PASSWORD')}{enter}`);
+        cy.get('form[action="/password"] input[type="password"]').type(`aingau{enter}`);
       }
     });
     
