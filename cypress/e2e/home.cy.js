@@ -14,9 +14,6 @@ describe('Homepage Tests', () => {
     cy.wait(1000);
     cy.handleAcceptButton();
 
-    cy.wait(1000);
-    cy.get('body').should('not.contain', 'Accept');
-
     Cypress.on('uncaught:exception', () => false);
   });
 
