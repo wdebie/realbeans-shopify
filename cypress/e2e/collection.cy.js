@@ -6,13 +6,13 @@ describe('Collection/Catalog and Product Detail Tests', () => {
     
     cy.get('body').then(($body) => {
       if ($body.find('form[action="/password"]').length > 0) {
-        cy.get('button[type="submit"]').click();
+        cy.get('button[type="submit"]').click({force: true});
         cy.get('form[action="/password"] input[type="password"]').type(`aingau{enter}`);
       }
     });
 
     cy.wait(1000);
-    cy.handleAcceptButton();
+    cy.handleAcceptButton({force: true});
 
     cy.wait(1000);
     cy.get('#HeaderMenu-catalog').click({force: true});
@@ -31,7 +31,7 @@ describe('Collection/Catalog and Product Detail Tests', () => {
   // Test for Blended coffee 5kg product details
   it('should display the correct details for Blended coffee 5kg product', () => {
     // Navigate to product detail page
-    cy.get('.card__heading').contains('Blended coffee 5kg').click();
+    cy.get('.card__heading').contains('Blended coffee 5kg').click({force: true});
     
     // Check product description
     cy.get('.product__description').should('contain', 'RealBeans coffee, ready to brew.');
@@ -46,15 +46,15 @@ describe('Collection/Catalog and Product Detail Tests', () => {
     cy.visit(`${Cypress.env('SHOPIFY_URL')}`);
     cy.get('body').then(($body) => {
       if ($body.find('form[action="/password"]').length > 0) {
-        cy.get('button[type="submit"]').click();
+        cy.get('button[type="submit"]').click({force: true});
         cy.get('form[action="/password"] input[type="password"]').type(`aingau{enter}`);
       }
     });
-    cy.handleAcceptButton();
+    cy.handleAcceptButton({force: true});
     cy.get('#HeaderMenu-catalog').click({force: true});
     
     // Navigate to Roasted coffee beans product
-    cy.get('.card__heading').contains('Roasted coffee beans 5kg').click();
+    cy.get('.card__heading').contains('Roasted coffee beans 5kg').click({force: true});
     
     // Check product description
     cy.get('.product__description').should('contain', 'Our best and sustainable real roasted beans.');
@@ -63,4 +63,3 @@ describe('Collection/Catalog and Product Detail Tests', () => {
     cy.get('.product__media-item img').should('have.attr', 'src').and('include', 'RealBeansRoastedBag.png');
   });
 });
-
