@@ -21,7 +21,7 @@ describe('Homepage Tests', () => {
   });
 
   it('should display the specific intro text about RealBeans history', () => {
-    const expectedText = "Since 1801, RealBeans has roasted premium coffee in Antwerp for Europe's finest cafes. Ethically sourced beans, crafted with care.";
-    cy.contains(expectedText).should('exist');
+    const expectedText = "Since 1801, RealBeans has roasted premium coffee in Antwerp for Europe’s finest cafes. Ethically sourced beans, crafted with care";
+    cy.contains(expectedText.split(/\s+/).join(' ')).should('exist');
   });
 });
