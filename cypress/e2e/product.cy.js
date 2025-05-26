@@ -16,9 +16,7 @@ describe('Product Detail Page Tests', () => {
       });
 
       // Click the accept button for the cookie popup (if present)
-      if (cy.get('button:contains("Accept")').length > 0) {
-        cy.get('button:contains("Accept")').click({force: true});
-      }
+      cy.handleAcceptButton();
       
       cy.get('#HeaderMenu-catalog').click({force: true});
       cy.get('.card__heading').contains('Blended coffee 5kg').click();
@@ -51,9 +49,7 @@ describe('Product Detail Page Tests', () => {
       });
 
       // Click the accept button for the cookie popup (if present)
-      if (cy.get('button:contains("Accept")').length > 0) {
-        cy.get('button:contains("Accept")').click({force: true});
-      }
+      cy.handleAcceptButton();
       
       cy.get('#HeaderMenu-catalog').click({force: true});
       cy.get('.card__heading').contains('Roasted coffee beans 5kg').click();

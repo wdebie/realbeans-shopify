@@ -12,9 +12,7 @@ describe('About Page Tests', () => {
     });
     
     cy.wait(1000);
-    if (cy.get('button:contains("Accept")').length > 0) {
-      cy.get('button:contains("Accept")').click({force: true});
-    }
+    cy.handleAcceptButton();
 
     cy.wait(1000);
     cy.get('#HeaderMenu-about-us').click({force: true});

@@ -18,3 +18,12 @@
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Custom command to handle the Accept button for cookie popups
+Cypress.Commands.add('handleAcceptButton', () => {
+  cy.get('body').then(($body) => {
+    if ($body.find('button:contains("Accept")').length > 0) {
+      cy.get('button:contains("Accept")').click({force: true});
+    }
+  });
+});
