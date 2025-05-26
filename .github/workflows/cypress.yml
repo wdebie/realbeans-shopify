@@ -74,5 +74,7 @@ jobs:
          parallel: true
        env:
          THEME_ID: ${{ needs.deploy.outputs.shopify_theme_id }}
+         THEME_PASSWORD: ${{ secrets.THEME_PASSWORD }}
+         SHOPIFY_URL: ${{ secrets.SHOPIFY_URL }}
          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
